@@ -1,9 +1,9 @@
-name: Deploy to Hostinger
+name: Deploy my-apps to Hostinger
 
 on:
   push:
     branches:
-      - main   # Runs when you push to main branch
+      - main   # Trigger deployment only on pushes to main branch
 
 jobs:
   deploy:
@@ -12,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Create subdomain in Hostinger
+      - name: Create/Update subdomain in Hostinger
         run: |
           curl -X POST "https://api.hostinger.com/dns-records" \
           -H "Authorization: Bearer ${{ secrets.HOSTINGER_API_KEY }}" \
@@ -20,7 +20,7 @@ jobs:
           -d '{
             "zone": "vistavisiondevelopers.com",
             "type": "A",
-            "name": "app",
+            "name": "my-apps",
             "content": "82.180.143.50",
             "ttl": 3600
           }'
@@ -28,8 +28,8 @@ jobs:
       - name: Deploy app to Hostinger (FTP upload)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ftp.yourdomain.com
+          server: vistavisiondevelopers.com
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./   # local GitHub repo
-          server-dir: /public_html/app/   # subdomain folder
+          local-dir: ./   # GitHub repo files
+          server-dir: /public_html/my-apps/
