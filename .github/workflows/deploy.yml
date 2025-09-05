@@ -3,7 +3,7 @@ name: Deploy to Hostinger
 on:
   push:
     branches:
-      - main
+      - main   # Runs when you push to main branch
 
 jobs:
   deploy:
@@ -25,7 +25,11 @@ jobs:
             "ttl": 3600
           }'
 
-      - name: Deploy app (example: copy files)
-        run: |
-          echo "🚀 Deploying app to subdomain..."
-          # your deployment script goes here
+      - name: Deploy app to Hostinger (FTP upload)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ftp.yourdomain.com
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./   # local GitHub repo
+          server-dir: /public_html/app/   # subdomain folder
