@@ -21,7 +21,7 @@ jobs:
             "zone": "vistavisiondevelopers.com",
             "type": "A",
             "name": "my-apps",
-            "content": "82.180.143.50",
+            "content": "ftp://82.180.143.50",
             "ttl": 3600
           }'
 
