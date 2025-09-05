@@ -1,0 +1,31 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create subdomain in Hostinger
+        run: |
+          curl -X POST "https://api.hostinger.com/dns-records" \
+          -H "Authorization: Bearer ${{ secrets.HOSTINGER_API_KEY }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "zone": "yourdomain.com",
+            "type": "A",
+            "name": "app",
+            "content": "1.2.3.4",
+            "ttl": 3600
+          }'
+
+      - name: Deploy app (example: copy files)
+        run: |
+          echo "🚀 Deploying app to subdomain..."
+          # your deployment script goes here
