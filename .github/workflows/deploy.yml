@@ -18,10 +18,10 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.HOSTINGER_API_KEY }}" \
           -H "Content-Type: application/json" \
           -d '{
-            "zone": "yourdomain.com",
+            "zone": "vistavisiondevelopers.com",
             "type": "A",
             "name": "app",
-            "content": "1.2.3.4",
+            "content": "82.180.143.50",
             "ttl": 3600
           }'
 
